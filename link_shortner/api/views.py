@@ -17,4 +17,6 @@ class RedirectShortLinkView(RedirectView):
    
    def get_redirect_url(self, *args: Any, **kwargs: Any) -> str | None:
        link = get_object_or_404(ShortLink, token=kwargs['token'])
+       link.click_count += 1
+       link.save()
        return link.long_url
